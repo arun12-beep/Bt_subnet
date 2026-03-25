@@ -85,7 +85,7 @@ def get_config() -> "bt.Config":
     )
 
     # Adds subtensor specific arguments i.e. --subtensor.chain_endpoint ... --subtensor.network ...
-    bt.subtensor.add_args(parser)
+    bt.Subtensor.add_args(parser)
 
     # Adds logging specific arguments i.e. --logging.debug ..., --logging.trace .. or --logging.logging_dir ...
     bt.logging.add_args(parser)

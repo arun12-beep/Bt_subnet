@@ -36,7 +36,7 @@ class StreamMiner(ABC):
         bt.logging.info(f"Wallet {self.wallet}")
 
         # subtensor manages the blockchain connection, facilitating interaction with the Bittensor blockchain.
-        self.subtensor = subtensor or bt.subtensor(config=self.config)
+        self.subtensor = subtensor or bt.Subtensor(config=self.config)
         bt.logging.info(f"Subtensor: {self.subtensor}")
         bt.logging.info(
             f"Running miner for subnet: {self.config.netuid} on network: {self.subtensor.chain_endpoint} with config:"
