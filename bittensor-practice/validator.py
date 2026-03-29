@@ -13,9 +13,6 @@ def score_response(input_val:float,output_val:float)->float:
         diff=abs(output_val-expected)
         return max(0.0,1.0-diff/expected)
             
-
-
-
 wallet=bt.Wallet(name="validator",hotkey="validator123")
 dendrite=bt.Dendrite(wallet=wallet)
 synapse=AddSynapse(dummy_input=5.0)
