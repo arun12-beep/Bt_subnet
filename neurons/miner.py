@@ -17,6 +17,7 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 # DEALINGS IN THE SOFTWARE.
 
+
 import time
 import typing
 import bittensor as bt
@@ -60,6 +61,7 @@ class Miner(BaseMinerNeuron):
         """
         # TODO(developer): Replace with actual implementation logic.
         synapse.dummy_output = synapse.dummy_input * 2
+        bt.logging.info(f"received input: {synapse.dummy_input} --> output {synapse.dummy_output}")
         return synapse
 
     async def blacklist(
@@ -112,6 +114,12 @@ class Miner(BaseMinerNeuron):
                 f"Blacklisting un-registered hotkey {synapse.dendrite.hotkey}"
             )
             return True, "Unrecognized hotkey"
+        #custom code :blacklisting vali with stake below 5k
+        stake=float(self.metagraph.S[uid])
+        if stake<5000:
+            bt.logging.warning(f"blacklisting low stake hotkey: {synapse.dendrite.hotkey} stake={stake}")
+            return True,"insufficient stake"
+
 
         if self.config.blacklist.force_validator_permit:
             # If the config is set to force validator permit, then we should only allow requests from validators.

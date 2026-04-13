@@ -9,3 +9,4 @@ for uid in range(len(metagraph.uids)):
     print(f"UID: {uid}")
     print(f"Axons: {axon.ip}:{axon.port}")
     print(f"Stake: {metagraph.S[uid].item():.4f}")
+    

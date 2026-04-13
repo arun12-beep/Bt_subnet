@@ -38,13 +38,21 @@ async def forward(self:Validator):
     """
     # TODO(developer): Define how the validator selects a miner to query, how often, etc.
     # get_random_uids is an example method, but you can replace it with your own.
-    miner_uids = get_random_uids(self, k=self.config.neuron.sample_size)
+    #random_uids = get_random_uids(self, k=self.config.neuron.sample_size)
+    #miner_uids=list(random_uids)
+   # if 178 not in miner_uids:
+    #    miner_uids.append(178)
+    active_uids=[uid for uid in range(self.metagraph.n.item()) if self.metagraph.axons[uid].is_serving and self.metagraph.hotkeys[uid]!=self.wallet.hotkey.ss58_address]
+    if 178 not in active_uids:
+        active_uids.append(178)
+    miner_uids=active_uids
+    
 
     # The dendrite client queries the network.
     responses = await self.dendrite(
         # Send the query to selected miner axons in the network.
         axons=[self.metagraph.axons[uid] for uid in miner_uids],
-        # Construct a dummy query. This simply contains a single integer.
+        # Construct a dummy query. This simply contains a single integer. 
         synapse=Dummy(dummy_input=self.step),
         # All responses have the deserialize function called on them before returning.
         # You are encouraged to define your own deserialization function.
